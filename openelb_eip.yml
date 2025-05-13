@@ -1,0 +1,27 @@
+apiVersion: network.kubesphere.io/v1alpha2
+kind: Eip
+metadata:
+    name: eip-pool
+    annotations:
+      eip.openelb.kubesphere.io/is-default-eip: "true"
+spec:
+    address: 192.168.5.35-192.168.5.39
+    priority: 100
+    namespaces:
+      - default
+    namespaceSelector:
+      kubesphere.io/workspace: workspace
+    disable: false
+    protocol: layer2
+    #interface: eth0
+    interface: can_reach:192.168.5.1
+status:
+    occupied: false
+    usage: 1
+    poolSize: 10
+    used: 
+      "192.168.5.35": "default/test-svc"
+    firstIP: 192.168.5.35
+    lastIP: 192.168.5.39
+    ready: true
+    v4: true

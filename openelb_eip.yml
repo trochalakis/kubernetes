@@ -1,27 +1,29 @@
 apiVersion: network.kubesphere.io/v1alpha2
 kind: Eip
 metadata:
-    name: eip-pool
-    annotations:
-      eip.openelb.kubesphere.io/is-default-eip: "true"
+  name: layer2-eip
 spec:
-    address: 192.168.5.35-192.168.5.39
-    priority: 100
-    namespaces:
-      - default
-    namespaceSelector:
-      kubesphere.io/workspace: workspace
-    disable: false
-    protocol: layer2
-    #interface: eth0
-    interface: can_reach:192.168.5.1
-status:
-    occupied: false
-    usage: 1
-    poolSize: 10
-    used: 
-      "192.168.5.35": "default/test-svc"
-    firstIP: 192.168.5.35
-    lastIP: 192.168.5.39
-    ready: true
-    v4: true
+  address: 172.31.73.130-172.31.73.132
+  namespaces: 
+  - project
+  interface: eth0
+  protocol: layer2
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+  namespace: project-test
+  annotations:
+    lb.kubesphere.io/v1alpha1: openelb
+    eip.openelb.kubesphere.io/v1alpha2: layer2-eip
+spec:
+  selector:
+    app: nginx
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  externalTrafficPolicy: Cluster

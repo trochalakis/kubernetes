@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apt-cacher-ng
+  namespace: apt-cacher-ng
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apt-cacher-ng
+  template:
+    metadata:
+      labels:
+        app: apt-cacher-ng
+    spec:
+      containers:
+        - name: apt-cacher-ng
+          image: sameersbn/apt-cacher-ng
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "512Mi"
+#              cpu: "500m"
+          ports:
+            - containerPort: 3142
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/cache/apt-cacher-ng
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: apt-cacher-ng

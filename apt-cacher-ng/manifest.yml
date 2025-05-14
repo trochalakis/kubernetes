@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apt-cacher-ng
+---
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: apt-cacher-ng
+  namespace: apt-cacher-ng
+  annotations:
+    volume.alpha.kubernetes.io/storage-class: "generic"
+  labels:
+    app.kubernetes.io/name: apt-cacher-ng
+    app.kubernetes.io/instance: apt-cacher-ng
+spec:
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "32Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apt-cacher-ng
+  namespace: apt-cacher-ng
+  annotations:
+    lb.kubesphere.io/v1alpha1: openelb
+    eip.openelb.kubesphere.io/v1alpha2: eip-pool
+spec:
+  selector:
+    app: apt-cacher-ng
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3142
+  externalTrafficPolicy: Cluster
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apt-cacher-ng
+  namespace: apt-cacher-ng
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apt-cacher-ng
+  template:
+    metadata:
+      labels:
+        app: apt-cacher-ng
+    spec:
+      containers:
+        - name: apt-cacher-ng
+          image: sameersbn/apt-cacher-ng
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "512Mi"
+#              cpu: "500m"
+          ports:
+            - containerPort: 3142
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/cache/apt-cacher-ng
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: apt-cacher-ng

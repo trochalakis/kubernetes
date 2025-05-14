@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+  namespace: code-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-server
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+        - name: code-server
+          image:  codercom/code-server:latest
+          imagePullPolicy: IfNotPresent
+#          resources:
+#            limits:
+#              memory: "512Mi"
+#              cpu: "500m"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /home/coder
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: code-server

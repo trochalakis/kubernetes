@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drawio
+  namespace: drawio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drawio
+  template:
+    metadata:
+      labels:
+        app: drawio
+    spec:
+      containers:
+        - name: drawio
+          image: jgraph/drawio
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          env:
+            - name: PUBLIC_DNS
+              value: "trochalakis.net"
+            - name: ORGANISATION_UNIT
+              value: "Trochalakis"
+            - name: ORGANISATION
+              value: "Trochalakis"
+            - name: CITY
+              value: "Redmond"
+            - name: STATE
+              value: "Washington"
+            - name: COUNTRY_CODE
+              value: "US"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 90
+            timeoutSeconds: 10
+            failureThreshold: 5

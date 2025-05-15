@@ -14,7 +14,7 @@ spec:
               secretName: universal-auth-credentials # <-- name of the Kubernetes secret that stores our machine identity credentials
               secretNamespace: default # <-- namespace of the Kubernetes secret that stores our machine identity credentials
   managedKubeSecretReferences:
-    - secretName: joplin-secret
+    - secretName: joplin-secrets
       secretNamespace: joplin
       creationPolicy: "Orphan"
       template:

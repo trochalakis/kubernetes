@@ -26,6 +26,6 @@ spec:
     app: joplin
   ports:
     - name: http
-      port: 22300
+      port: 80
       targetPort: 22300
   externalTrafficPolicy: Cluster

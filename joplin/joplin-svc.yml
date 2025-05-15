@@ -17,10 +17,15 @@ kind: Service
 metadata:
   name: joplin
   namespace: joplin
+  annotations:
+    lb.kubesphere.io/v1alpha1: openelb
+    eip.openelb.kubesphere.io/v1alpha2: eip-pool
 spec:
+  type: LoadBalancer
   selector:
     app: joplin
   ports:
     - name: http
       port: 22300
       targetPort: 22300
+  externalTrafficPolicy: Cluster

@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-drawio
+  namespace: drawio
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: drawio.trochalakis.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: drawio
+          servicePort: 8080

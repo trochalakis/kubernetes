@@ -3,9 +3,6 @@ kind: Service
 metadata:
   name: code-server
   namespace: code-server
-  annotations:
-    lb.kubesphere.io/v1alpha1: openelb
-    eip.openelb.kubesphere.io/v1alpha2: eip-pool
 spec:
   selector:
     app: code-server

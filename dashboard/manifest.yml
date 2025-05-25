@@ -4,7 +4,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kubernetes-dashboard-kong
-  namespace: default
+  namespace: kubernetes-dashboard
   labels:
     app.kubernetes.io/name: kong
     helm.sh/chart: kong-2.46.0
@@ -121,7 +121,7 @@ metadata:
     
   name: kubernetes-dashboard-csrf
 data:
-  private.key: "ZndPRmlsZ0pvUSs1VXZwelhCdkVZK3pPSzVHSEtFNkNKWkdrOFlocGN2SCsyYS94WGFYSTM4R0w0U01DN2Y0djg2WGIwV2lSZFp4YWJFSDFIcCtuLzNDb1R5UG1xWHZCeFRPMHN2TE5qUW40c2lkUzZubGJISVhCWVJ1OUJ6cUk3bjU2R2MwbXQyVU1PUTJlTXZpUkxkcjhPUDBDaEI1MzgwRnVDQXNxRHdKanlKbHM2cStnTlpSdEVIaUhIeTNNaTRRSWhZVUVheHlqRVczZDdCa3d6Qmg1bjdHQ21acmw4TXp6VGZkOC8xcC9wVnpuL05ZNThoRFRKVjlsci9yOFM0QnZ1dmpnVXFMcjgwSndwWDEzV281dzc4dURrTXo5bXJ5enJ6cWFhVjZyZVZPUlJCUjgwTmpQd3N6dHcrd2Fxd0dEdUpSQjlydE9oa01aZUZYc2JBPT0="
+  private.key: "dVl4TEt3ZG5LdWp1K2MyM3UwYzNqbXpwTUl0TEdTclFxbmFJM1RwRDl3bUxTdmVyTVVxZE9UekhlU0RRRVBSMGljN21PUUdXbXZUUE5YME1BbUVhOTZnMGpqZTEvM3NhNDJoMlovM1VjYVpmYmYxY0NHVWQ0Slg3RmxXd01oa3RxRVo0UjJKQnlIQU9wMXpQeFI4aHJ6eEdxY3ZoaDE0SkFIR3dzK3luY24ycUhlVUVoMUxFNHRaTDNTTzBSL0ZQbDVvaEJxSkRlRjJTMUcwYUl3MFRxOHZpeEplMVJaaitRN0tBMTh3MkZWQVV0WEtuYVZnWVFJYWtYdTFkcmNpcWtXK0QwanVxQUY1SlVFdzBVcE1jVEw5Wm53U3dnNlhrenpMNEpWd2liUkZ3Z3ZTblRLOC9yOEdqVWVFZzRGY08yOEJCMm1CUDQ4L3M1aVRFNWZzeFJBPT0="
 ---
 # Source: kubernetes-dashboard/templates/config/gateway.yaml
 # Copyright 2017 The Kubernetes Authors.
@@ -286,7 +286,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: kubernetes-dashboard-metrics-scraper
-    namespace: default
+    namespace: kubernetes-dashboard
 ---
 # Source: kubernetes-dashboard/templates/rbac/api/role.yaml
 # Copyright 2017 The Kubernetes Authors.
@@ -427,7 +427,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kubernetes-dashboard-kong-proxy
-  namespace: default
+  namespace: kubernetes-dashboard
   labels:
     app.kubernetes.io/name: kong
     helm.sh/chart: kong-2.46.0
@@ -630,7 +630,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kubernetes-dashboard-kong
-  namespace:  default
+  namespace:  kubernetes-dashboard
   labels:
     app.kubernetes.io/name: kong
     helm.sh/chart: kong-2.46.0
@@ -951,14 +951,14 @@ spec:
         app.kubernetes.io/version: 1.12.0
         app.kubernetes.io/component: api
       annotations:
-        checksum/config: b4579c4314fd9b213996c879514682f39aff4f34de76726f4ae9d4b1c5a99064
+        checksum/config: 5fbfc9e058bb6a1a589db79179a341b3f8befbc52636125b778399f448e789a8
     spec:
       containers:
         - name: kubernetes-dashboard-api
           image: "docker.io/kubernetesui/dashboard-api:1.12.0"
           imagePullPolicy: IfNotPresent
           args:
-            - --namespace=default
+            - --namespace=kubernetes-dashboard
             - --metrics-scraper-service-name=kubernetes-dashboard-metrics-scraper
 
           env:
@@ -1064,7 +1064,7 @@ spec:
         app.kubernetes.io/version: 1.2.4
         app.kubernetes.io/component: auth
       annotations:
-        checksum/config: e516c518226ee26395251b9c85777751a07fc72bb6c5f6b1e55f04fc135e3fd4
+        checksum/config: bbd9e1248f5c06c1e55b19113d898c55789f7718f953455f863b9f0aa12da8f6
     spec:
       containers:
         - name: kubernetes-dashboard-auth
@@ -1292,7 +1292,7 @@ spec:
           image: "docker.io/kubernetesui/dashboard-web:1.6.2"
           imagePullPolicy: IfNotPresent
           args:
-            - --namespace=default
+            - --namespace=kubernetes-dashboard
             - --settings-config-map-name=kubernetes-dashboard-web-settings
 
           env:

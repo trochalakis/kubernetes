@@ -161,11 +161,11 @@ spec:
           initialDelaySeconds: 1
           periodSeconds: 10
         volumeMounts:
-        - name: data
+        - name: redisdata
           mountPath: /var/lib/redis
   volumeClaimTemplates:
   - metadata:
-      name: data
+      name: redisdata
       labels:
         heritage: Helm
         release: harbor
@@ -173,7 +173,7 @@ spec:
         app: "harbor"
       annotations:
     spec:
-      accessModes: ["ReadWriteMany"]
+      accessModes: ["ReadWriteOnce"]
       resources:
         requests:
           storage: "1Gi"

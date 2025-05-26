@@ -160,23 +160,23 @@ spec:
             port: 6379
           initialDelaySeconds: 1
           periodSeconds: 10
-        volumeMounts:
-        - name: data
-          mountPath: /var/lib/redis
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-      labels:
-        heritage: Helm
-        release: harbor
-        chart: harbor
-        app: "harbor"
-      annotations:
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: "1Gi"
+#        volumeMounts:
+#        - name: data
+#          mountPath: /var/lib/redis
+#  volumeClaimTemplates:
+#  - metadata:
+#      name: data
+#      labels:
+#        heritage: Helm
+#        release: harbor
+#        chart: harbor
+#        app: "harbor"
+#      annotations:
+#    spec:
+#      accessModes: ["ReadWriteOnce"]
+#      resources:
+#        requests:
+#          storage: "1Gi"
 ---
 # Source: harbor/templates/trivy/trivy-sts.yaml
 apiVersion: apps/v1

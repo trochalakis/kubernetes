@@ -161,11 +161,11 @@ spec:
           initialDelaySeconds: 1
           periodSeconds: 10
         volumeMounts:
-        - name: redisdata
+        - name: data
           mountPath: /var/lib/redis
   volumeClaimTemplates:
   - metadata:
-      name: redisdata
+      name: data
       labels:
         heritage: Helm
         release: harbor

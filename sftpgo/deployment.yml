@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sftpgo
+  namespace: sftpgo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sftpgo
+  template:
+    metadata:
+      labels:
+        app: sftpgo
+    spec:
+      containers:
+        - name: sftpgo
+          image: drakkan/sftpgo:latest
+          ports:
+            - containerPort: 2022  # SFTP
+            - containerPort: 8080  # Web UI
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/sftpgo
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: sftpgo-data

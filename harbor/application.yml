@@ -15,8 +15,10 @@ spec:
           type: ingress
           tls:
             enabled: true
-            secretName: harbor-tls
+            certSource: auto
           ingress:
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-cloudflare
             hosts:
               core: harbor.trochalakis.net
               notary: notary.harbor.trochalakis.net

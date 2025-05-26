@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://helm.goharbor.io
     chart: harbor
-    targetRevision: 1.14.1         # use latest or pin to version
+    targetRevision: 1.14.1  # Or latest stable
     helm:
       values: |
         expose:
@@ -18,15 +18,15 @@ spec:
             secretName: harbor-tls
           ingress:
             hosts:
-              core: harbor.example.com
-              notary: notary.harbor.example.com
-        externalURL: https://harbor.example.com
+              core: harbor.trochalakis.net
+              notary: notary.harbor.trochalakis.net
+        externalURL: https://harbor.trochalakis.net
+        harborAdminPassword: "ChangeThisPassword"
         persistence:
           persistentVolumeClaim:
             registry:
               storageClass: "standard"
-              size: 5Gi
-        harborAdminPassword: "ChangeThisPassword"
+              size: 10Gi
   destination:
     server: https://kubernetes.default.svc
     namespace: harbor

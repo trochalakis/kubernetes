@@ -88,9 +88,9 @@ spec:
           - name: PGDATA
             value: "/var/lib/postgresql/data/pgdata"
         volumeMounts:
-        - name: database-data
-          mountPath: /var/lib/postgresql/data
-          subPath:
+#        - name: database-data
+#          mountPath: /var/lib/postgresql/data
+#          subPath:
         - name: shm-volume
           mountPath: /dev/shm
       volumes:

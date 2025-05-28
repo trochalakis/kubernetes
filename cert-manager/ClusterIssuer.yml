@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-cloudflare
+  name: trochalakisnet-issuer
 spec:
   acme:
     email: admin@trochalakis.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: letsencrypt-cloudflare-account-key
+      name: cluster-issuer-account-key
     solvers:
     - dns01:
         cloudflare:

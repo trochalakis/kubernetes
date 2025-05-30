@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: dnsutils
-  namespace: argocd
+  namespace: debug
 spec:
   containers:
   - name: dnsutils
